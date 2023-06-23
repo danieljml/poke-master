@@ -46,7 +46,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
       Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: 'Your work has been saved',
+        title: 'Login Successful',
         showConfirmButton: false,
         timer: 1500
       })
