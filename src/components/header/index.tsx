@@ -7,8 +7,6 @@ import {
 } from '@heroicons/react/24/outline'
 import logo from "../../assets/monoma-logo-white.png"
 
-
-
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const navigate = useNavigate();
@@ -20,7 +18,7 @@ const Header = () => {
     }
   }, []);
 
-  const handleLogout = () :void => {
+  const handleLogout = () => {
     localStorage.removeItem('user')
     navigate('/login')
   }
@@ -78,20 +76,19 @@ const Header = () => {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <a
-                  href="#"
+                <p
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Dashboard
-                </a>
+                  DASHBOARD
+                </p>
               </div>
               <div className="py-6">
-                <a
-                  href="#"
+                <button
+                  onClick={handleLogout}
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
-                  Log out
-                </a>
+                  LOG OUT
+                </button>
               </div>
             </div>
           </div>
