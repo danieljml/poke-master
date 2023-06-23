@@ -14,7 +14,8 @@ export default {
       'silver': '#ecebff',
       'bubble-gum': '#ff77e9',
       'bermuda': '#78dcca',
-      'black': '#000'
+      'black': '#000',
+      'green': '#D6E4E5'
     },
     extend: {},
   },
