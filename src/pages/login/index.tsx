@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 import logo from '../../assets/monoma-logo.png';
 import { findUser } from '../../utils';
+import Swal from 'sweetalert2'
 
 interface User {
   id: number;
@@ -42,9 +43,22 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
       const {id, email} = userExist
       setUser(userExist);
       localStorage.setItem('user', JSON.stringify({id, email}));
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      })
       return navigate('/');
     }
-    console.log('This user has an error');
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: 'This user has an error',
+      showConfirmButton: false,
+      timer: 1500
+    })
   };
 
   return (
