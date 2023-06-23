@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 import logo from '../../assets/monoma-logo.png';
@@ -17,6 +17,14 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ setUser }) => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+
+
+  useEffect(() => {
+    const body = document.querySelector('body');
+    if (body) {
+      body.style.backgroundColor = '#D6E4E5';
+    }
+  }, []);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
