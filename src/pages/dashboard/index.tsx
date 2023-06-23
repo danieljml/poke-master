@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import Cards from '../../components/card';
+import Header from '../../components/header';
 
 interface DashboardProps {
   user: boolean | null;
@@ -15,6 +16,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
 
   return (
     <>
+      <Header />
       <div>Dashboard page</div>
       <Cards />
     </>
