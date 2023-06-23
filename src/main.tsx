@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ReactDOM from 'react-dom/client'
 import {
   createBrowserRouter,
@@ -9,16 +9,25 @@ import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 
 
-const App = () => {
+interface User {
+  id: number,
+  email:string,
+  password: string
+}
 
+const App = () => {
+  const [user, setUser] = useState<User | null>(
+    JSON.parse(localStorage.getItem('user') || 'null')
+  );
+  
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Dashboard />,
+      element: <Dashboard user={Boolean(user)} />,
     },
     {
       path: '/login',
-      element: <Login/>,
+      element: <Login setUser ={setUser}/>,
     },
   ]);
   return (
