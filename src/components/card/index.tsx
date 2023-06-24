@@ -1,17 +1,16 @@
 import styled from 'styled-components';
 
-const Card = () => {
+const Card = ({ date, height, title, skills, headerImageUrl }) => {
 	return (
 		<CardContainer>
-			<CardHeader>
-				<span>May 20th 2020</span>
-				<CardHeight>Temática</CardHeight>
+			<CardHeader headerImageUrl={headerImageUrl}>
+				<span>{date}</span>
+				<CardHeight>{height}</CardHeight>
 			</CardHeader>
 			<CardContent>
-				<CardTitle>Titular Noticia</CardTitle>
+				<CardTitle>{title}</CardTitle>
 				<CardSkills>
-					<span>#Tags</span>
-					<span>#GoHipoteca</span>
+					{skills.map(item => <span>#{item}</span>)}
 				</CardSkills>
 			</CardContent>
 		</CardContainer>
@@ -49,9 +48,10 @@ const CardHeader = styled.div`
 	color: #F0FEF6;
 	display: flex;
 	height: 70%;
-	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url('https://img.business.com/w/700/aHR0cHM6Ly9pbWFnZXMuYnVzaW5lc3NuZXdzZGFpbHkuY29tL2FwcC91cGxvYWRzLzIwMjIvMDQvMDQwNzQ1NTMvMTU1NDI0NDAxMC5qcGVn');
+	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url('${props => props.headerImageUrl}');
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: contains;
+	background-position: center;
 	border-radius: 20px 20px 0 0;
 	justify-content: space-around;
 	align-items: flex-end;
@@ -71,18 +71,18 @@ const CardContainer = styled.div`
 	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 `
 
-const Cards = () => {
+const Cards = ({ records }) => {
 	return (
 		<CardsContainer>
-			<Card />
-			<Card />
-			<Card />
-			<Card />
-			<Card />
-			<Card />
-			<Card />
-			<Card />
-			<Card />
+			{records?.map(item => (
+				<Card
+					key={item.name}
+					date={'June 23th, 2023'}
+					height={`${item.height} ft`}
+					title={item.name}
+					skills={item.skills}
+					headerImageUrl={item.image}/>
+			))}
 		</CardsContainer>
 	)
 }
