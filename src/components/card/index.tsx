@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface CardProps {
   date: string;
-  height: string;
+  weight: string;
   title: string;
   skills: string[];
   headerImageUrl: string;
@@ -66,7 +66,7 @@ const CardSkills = styled.div`
   color: #306D5E;
 `;
 
-const CardHeight = styled.div`
+const CardWeight = styled.div`
   background-color: #34D350;
   border-radius: 20px;
   padding: 2px 10px;
@@ -80,7 +80,7 @@ const CardsContainer = styled.div`
 
 const Card: React.FC<CardProps> = ({
   date,
-  height,
+  weight,
   title,
   skills,
   headerImageUrl,
@@ -89,7 +89,7 @@ const Card: React.FC<CardProps> = ({
     <CardContainer>
       <CardHeader headerImageUrl={headerImageUrl}>
         <span>{date}</span>
-        <CardHeight>{height}</CardHeight>
+        <CardWeight>{weight}</CardWeight>
       </CardHeader>
       <CardContent>
         <CardTitle>{title}</CardTitle>
@@ -101,14 +101,14 @@ const Card: React.FC<CardProps> = ({
   );
 };
 
-const Cards: React.FC<{ records: { name: string; height: number; skills: string[]; image: string }[] }> = ({ records }) => {
+const Cards: React.FC<{ records: { name: string; weight: number; skills: string[]; image: string }[] }> = ({ records }) => {
   return (
     <CardsContainer>
       {records?.map(item => (
         <Card
           key={item.name}
           date={'June 23th, 2023'}
-          height={`${item.height} ft`}
+          weight={`${item.weight / 10} kg`}
           title={item.name}
           skills={item.skills}
           headerImageUrl={item.image}

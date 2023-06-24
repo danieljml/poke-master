@@ -23,9 +23,8 @@ const Header = () => {
     navigate('/login')
   }
 
-  const handleNavigationDashboard = () => {
-    navigate('/')
-  }
+  const handleNavigationDashboard = () => navigate('/')
+  
 
   return (
     <header className="bg-green">

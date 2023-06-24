@@ -12,7 +12,7 @@ interface DashboardProps {
 interface PokemonDetails {
   name: string;
   image: string;
-  height: number;
+  weight: number;
   skills: string[];
 }
 

@@ -18,14 +18,14 @@ interface PokemonSprites {
 interface PokemonResponse {
   name: string;
   sprites: PokemonSprites;
-  height: number;
+  weight: number;
   abilities: PokemonAbility[];
 }
 
 export interface PokemonDetails {
   name: string;
   image: string;
-  height: number;
+  weight: number;
   skills: string[];
 }
 
@@ -48,14 +48,14 @@ export const getPokemons = async (currentPage: number): Promise<PokemonApiRespon
     const pokemonDetailsPromises = results.map(async (pokemon: PokemonResult) => {
       const pokemonResponse: AxiosResponse<PokemonResponse> = await axios.get(pokemon.url);
 
-      const { name, sprites, height, abilities } = pokemonResponse.data;
+      const { name, sprites, weight, abilities } = pokemonResponse.data;
       const skills = abilities.map((ability) => ability.ability.name);
       const image = sprites.front_default;
-
+      console.log(pokemonResponse.data)
       return {
         name,
         image,
-        height,
+        weight,
         skills,
       };
     });
