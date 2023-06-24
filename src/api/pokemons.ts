@@ -15,14 +15,26 @@ interface PokemonSprites {
   front_default: string;
 }
 
-interface PokemonDetails {
+interface PokemonResponse {
+  name: string;
+  sprites: PokemonSprites;
+  height: number;
+  abilities: PokemonAbility[];
+}
+
+export interface PokemonDetails {
   name: string;
   image: string;
   height: number;
   skills: string[];
 }
 
-export const getPokemons = async (currentPage: number): Promise<PokemonDetails[] | undefined> => {
+export interface PokemonApiResponse {
+  results: PokemonDetails[];
+  totalPages: number;
+}
+
+export const getPokemons = async (currentPage: number): Promise<PokemonApiResponse | undefined> => {
   try {
     const response: AxiosResponse<{ results: PokemonResult[] }> = await axios.get('https://pokeapi.co/api/v2/pokemon', {
       params: {
@@ -34,12 +46,7 @@ export const getPokemons = async (currentPage: number): Promise<PokemonDetails[]
     const { results } = response.data;
 
     const pokemonDetailsPromises = results.map(async (pokemon: PokemonResult) => {
-      const pokemonResponse: AxiosResponse<{
-        name: string;
-        sprites: PokemonSprites;
-        height: number;
-        abilities: PokemonAbility[];
-      }> = await axios.get(pokemon.url);
+      const pokemonResponse: AxiosResponse<PokemonResponse> = await axios.get(pokemon.url);
 
       const { name, sprites, height, abilities } = pokemonResponse.data;
       const skills = abilities.map((ability) => ability.ability.name);
@@ -55,8 +62,12 @@ export const getPokemons = async (currentPage: number): Promise<PokemonDetails[]
 
     const pokemonDetails: PokemonDetails[] = await Promise.all(pokemonDetailsPromises);
 
-    return pokemonDetails;
+    return {
+      results: pokemonDetails,
+      totalPages: 129
+    };
   } catch (error) {
     console.log('Error fetching Pokemon:', error);
+    return undefined;
   }
 };
