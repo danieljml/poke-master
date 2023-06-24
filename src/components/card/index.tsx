@@ -37,25 +37,25 @@ const CardTitle = styled.div`
 `
 
 const CardContent = styled.div`
-	padding: 10px 25px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-around;
-	height: 30%;
+	padding: 10px 25px 15px 25px;
+    display: flex;
+    row-gap: 35px;
+    flex-direction: column;
+    justify-content: space-around;
 `
 
 const CardHeader = styled.div`
 	color: #F0FEF6;
 	display: flex;
-	height: 70%;
+	height: 210px;
 	background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)), url('${props => props.headerImageUrl}');
 	background-repeat: no-repeat;
 	background-size: contains;
 	background-position: center;
 	border-radius: 20px 20px 0 0;
-	justify-content: space-around;
+	justify-content: space-between;
 	align-items: flex-end;
-	padding: 10px;
+	padding: 10px 25px;
 `
 
 const CardContainer = styled.div`
