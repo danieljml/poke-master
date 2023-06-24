@@ -1,45 +1,23 @@
 import axios, { AxiosResponse } from 'axios';
 
-interface PokemonDetails {
-  name: string;
-  height: number;
-  weight: number;
-  abilities: string[];
-  moves: string[];
-  types: string[];
-}
-
-const getPokemonDetails = async (pokemonName: string): Promise<PokemonDetails | undefined> => {
+export const getPokemonDetails = async (name: string): Promise<any> => {
   try {
-    const response: AxiosResponse<any> = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
-
-    const { name, height, weight, abilities, moves, types } = response.data;
-
-    const pokemonDetails: PokemonDetails = {
-      name,
-      height,
-      weight,
-      abilities: abilities.map((ability: any) => ability.ability.name),
-      moves: moves.map((move: any) => move.move.name),
-      types: types.map((type: any) => type.type.name),
-    };
-
-    return pokemonDetails;
+    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+		const speciesUrl = response?.data?.species?.url;
+    const species = speciesUrl ? await axios.get(speciesUrl): {};
+    const abilityPromises = response?.data?.abilities?.map(async (item) => {
+      const response = await axios.get(item?.ability?.url);
+			return response?.data;
+    });
+    const abilities = abilityPromises ? await Promise.all(abilityPromises): [];
+    const evolutionChain = await axios.get(species?.data?.evolution_chain?.url);
+    return {
+			general: response?.data,
+			species: species?.data,
+			abilities: abilities,
+			evolutionChain: evolutionChain?.data,
+		}
   } catch (error) {
     console.log('Error fetching Pokemon details:', error);
-    return undefined;
   }
 };
-
-// Usage example:
-getPokemonDetails('pikachu')
-  .then((pokemon: PokemonDetails | undefined) => {
-    if (pokemon) {
-      console.log('Pokemon Details:', pokemon);
-    } else {
-      console.log('Pokemon not found.');
-    }
-  })
-  .catch((error) => {
-    console.log('Error:', error);
-  });
