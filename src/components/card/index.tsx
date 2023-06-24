@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 interface CardProps {
   date: string;
@@ -85,8 +86,14 @@ const Card: React.FC<CardProps> = ({
   skills,
   headerImageUrl,
 }) => {
+  const navigate = useNavigate();
+
+	const manageContainerClick = () => {
+		navigate(`details/${title}`);
+	}
+
   return (
-    <CardContainer>
+    <CardContainer onClick={manageContainerClick}>
       <CardHeader headerImageUrl={headerImageUrl}>
         <span>{date}</span>
         <CardWeight>{weight}</CardWeight>
