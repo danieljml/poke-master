@@ -37,7 +37,7 @@ const CardTitle = styled.div`
 `
 
 const CardContent = styled.div`
-	padding: 10px 25px;
+	padding: 6px 30px;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
@@ -55,10 +55,11 @@ const CardHeader = styled.div`
 	border-radius: 20px 20px 0 0;
 	justify-content: space-around;
 	align-items: flex-end;
-	padding: 10px;
+	padding: 10px 0;
 `
 
 const CardContainer = styled.div`
+	cursor: pointer;
 	display: inline-flex;
 	border-radius: 20px;
 	background-color: #FFF;
@@ -69,6 +70,12 @@ const CardContainer = styled.div`
 	max-height: 300px;
 	flex-direction: column;
 	box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+	transition: .5s all ease;
+	text-transform: capitalize;
+
+	&:hover {
+		transform: scale(1.1);
+	}
 `
 
 const Cards = ({ records }) => {
@@ -91,6 +98,7 @@ const CardsContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	padding: 20px 10%;
 `
 
 export default Cards
