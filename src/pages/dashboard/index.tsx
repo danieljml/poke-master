@@ -17,7 +17,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   return (
     <>
       <Header />
-      <div>Dashboard page</div>
       <Cards />
     </>
   );
