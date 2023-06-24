@@ -7,6 +7,7 @@ import {
 import './index.css'
 import Dashboard from './pages/dashboard';
 import Login from './pages/login';
+import Details from './pages/details';
 
 
 interface User {
@@ -29,6 +30,10 @@ const App = () => {
       path: '/login',
       element: <Login setUser ={setUser}/>,
     },
+		{
+			path: '/details/:name',
+			element: <Details />
+		}
   ]);
   return (
     <>
