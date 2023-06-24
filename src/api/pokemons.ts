@@ -64,7 +64,7 @@ export const getPokemons = async (currentPage: number): Promise<PokemonApiRespon
 
     return {
       results: pokemonDetails,
-      totalPages: 80
+      totalPages: 129
     };
   } catch (error) {
     console.log('Error fetching Pokemon:', error);
