@@ -29,7 +29,7 @@ const PageButton = styled.button<{ isActive: boolean }>`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #22c240
+    background-color: #22c240;
   }
 `;
 
@@ -44,34 +44,27 @@ const Pagination: React.FC<PaginationProps> = ({
     }
   };
 
+  const handleDotsLeftClick = () => {
+    const newPage = currentPage - 5;
+    handlePageChange(newPage > 0 ? newPage : 1);
+  };
+
+  const handleDotsRightClick = () => {
+    const newPage = currentPage + 5;
+    handlePageChange(newPage < totalPages ? newPage : totalPages);
+  };
+
   const renderPageButtons = () => {
     const pageButtons = [];
 
-    // Renderizar botón para la primera página
-    if (currentPage > 1) {
-      pageButtons.push(
-        <PageButton
-          key={1}
-          isActive={1 === currentPage}
-          onClick={() => handlePageChange(1)}
-        >
-          1
-        </PageButton>
-      );
-
-      // Renderizar puntos suspensivos si hay una brecha significativa entre la primera página y la página actual - 1
-      if (currentPage > 4) {
-        pageButtons.push(
-          <PageButton key="dots-left" isActive={false} onClick={() => {}}>
-            ...
-          </PageButton>
-        );
-      }
-    }
-
-    // Renderizar los botones para las páginas intermedias
-    for (let i = currentPage - 2; i <= currentPage + 2; i++) {
-      if (i > 1 && i < totalPages) {
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        Math.abs(currentPage - i) <= 2 ||
+        (i === currentPage - 3 && currentPage > 5) ||
+        (i === currentPage + 3 && currentPage < totalPages - 4)
+      ) {
         pageButtons.push(
           <PageButton
             key={i}
@@ -84,26 +77,20 @@ const Pagination: React.FC<PaginationProps> = ({
       }
     }
 
-    // Renderizar puntos suspensivos si hay una brecha significativa entre la página actual + 1 y la última página
-    if (currentPage < totalPages - 3) {
-      pageButtons.push(
-        <PageButton key="dots-right" isActive={false} onClick={() => {}}>
+    if (currentPage > 5) {
+      pageButtons.splice(1, 0, (
+        <PageButton key="dots-left" isActive={false} onClick={handleDotsLeftClick}>
           ...
         </PageButton>
-      );
+      ));
     }
 
-    // Renderizar botón para la última página
-    if (currentPage < totalPages) {
-      pageButtons.push(
-        <PageButton
-          key={totalPages}
-          isActive={totalPages === currentPage}
-          onClick={() => handlePageChange(totalPages)}
-        >
-          {totalPages}
+    if (currentPage < totalPages - 4) {
+      pageButtons.splice(pageButtons.length - 1, 0, (
+        <PageButton key="dots-right" isActive={false} onClick={handleDotsRightClick}>
+          ...
         </PageButton>
-      );
+      ));
     }
 
     return pageButtons;
