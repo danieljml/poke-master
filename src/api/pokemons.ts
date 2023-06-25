@@ -51,7 +51,6 @@ export const getPokemons = async (currentPage: number): Promise<PokemonApiRespon
       const { name, sprites, weight, abilities } = pokemonResponse.data;
       const skills = abilities.map((ability) => ability.ability.name);
       const image = sprites.front_default;
-      console.log(pokemonResponse.data)
       return {
         name,
         image,
