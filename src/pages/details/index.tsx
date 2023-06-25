@@ -25,6 +25,23 @@ interface ParsedPokemon {
   condition: string | null;
 }
 
+const EvolutionChainCard = styled.div`
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+`;
+
+const EvolutionChainTitle = styled.h3`
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #205d3e;
+`;
+
+const EvolutionChainText = styled.p`
+  margin-top: 10px;
+`;
+
 const EvolutionChain: React.FC<EvolutionChainProps> = ({ evolutionChain }) => {
   const parseEvolutionChain = (chain: any): ParsedPokemon => {
     const parseChain = (pokemon: any): ParsedPokemon => {
@@ -52,9 +69,9 @@ const EvolutionChain: React.FC<EvolutionChainProps> = ({ evolutionChain }) => {
 
   const renderEvolution = (pokemon: ParsedPokemon): JSX.Element => {
     return (
-      <div key={pokemon.name}>
-        <h3>{pokemon.name}</h3>
-        {pokemon.condition && <p>Condition: {pokemon.condition}</p>}
+      <EvolutionChainCard key={pokemon.name}>
+        <EvolutionChainTitle>{pokemon.name}</EvolutionChainTitle>
+        {pokemon.condition && <EvolutionChainText>Condition: {pokemon.condition}</EvolutionChainText>}
         {pokemon.evolvesTo.length > 0 && (
           <ul>
             {pokemon.evolvesTo.map((evolution: ParsedPokemon) => (
@@ -62,7 +79,7 @@ const EvolutionChain: React.FC<EvolutionChainProps> = ({ evolutionChain }) => {
             ))}
           </ul>
         )}
-      </div>
+      </EvolutionChainCard>
     );
   };
 
@@ -127,6 +144,7 @@ const Details: React.FC = () => {
       {details ? (
         <Container>
           <Title>{name}</Title>
+          <PokemonImage src={details?.general?.sprites?.front_default} alt={name} />
           <Section>
             <SectionTitle>Description</SectionTitle>
             <SectionContent>{description}</SectionContent>
@@ -136,7 +154,7 @@ const Details: React.FC = () => {
             <SectionContent>
               <ul>
                 {pokedexNumbers?.map((item: PokedexNumber) => (
-                  <li key={item.entryNumber}>
+                  <li key={item.name}>
                     <span>{item.entryNumber}</span>
                     <span>{item.name}</span>
                   </li>
@@ -193,8 +211,12 @@ const Details: React.FC = () => {
             <SectionContent>{generation}</SectionContent>
           </Section>
           <Section>
-            <SectionTitle></SectionTitle>
-            <SectionContent></SectionContent>
+            <SectionTitle>Capture Rate</SectionTitle>
+            <SectionContent>{captureRate}</SectionContent>
+          </Section>
+          <Section>
+            <SectionTitle>Base Happiness</SectionTitle>
+            <SectionContent>{baseHappiness}</SectionContent>
           </Section>
         </Container>
       ) : (
@@ -205,22 +227,28 @@ const Details: React.FC = () => {
 };
 
 const Section = styled.section`
-  margin: 20px 0;
+  margin-bottom: 20px;
 `;
 
 const SectionTitle = styled.h2`
   font-size: 1.5em;
   font-weight: bold;
+  margin-bottom: 10px;
 `;
 
 const SectionContent = styled.div`
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px;
 `;
 
 const Title = styled.h1`
+  text-align: center;
   text-transform: capitalize;
   color: #205d3e;
   font-size: 2em;
   font-weight: bold;
+  margin-bottom: 20px;
 `;
 
 const Container = styled.div`
@@ -232,6 +260,13 @@ const LoadingMsj = styled.h1`
   text-align: center;
   font-size: 2em;
   font-weight: bold;
+`;
+
+const PokemonImage = styled.img`
+  display: block;
+  margin: 0 auto;
+  max-width: 300px;
+  max-height: 300px;
 `;
 
 export default Details;
