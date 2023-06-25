@@ -101,7 +101,7 @@ const Card: React.FC<CardProps> = ({
       <CardContent>
         <CardTitle>{title}</CardTitle>
         <CardSkills>
-          {skills.map(item => <span key={item}>#{item}</span>)}
+          {skills.map((item, i) => <span key={`${item}-${i}`}>#{item}</span>)}
         </CardSkills>
       </CardContent>
     </CardContainer>

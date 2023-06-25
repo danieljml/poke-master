@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/header';
 import { getPokemonDetails } from '../../api/pokemon-details';
 import styled from 'styled-components';
+import Loading from '../../components/loading';
 
 interface EvolutionChainProps {
   evolutionChain: any;
@@ -220,7 +221,7 @@ const Details: React.FC = () => {
           </Section>
         </Container>
       ) : (
-        <LoadingMsj>Loading...</LoadingMsj>
+        <Loading />
       )}
     </>
   );
@@ -253,13 +254,6 @@ const Title = styled.h1`
 
 const Container = styled.div`
   padding: 20px 40px;
-`;
-
-const LoadingMsj = styled.h1`
-  text-transform: capitalize;
-  text-align: center;
-  font-size: 2em;
-  font-weight: bold;
 `;
 
 const PokemonImage = styled.img`

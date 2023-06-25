@@ -4,6 +4,7 @@ import Cards from '../../components/card';
 import Header from '../../components/header';
 import { getPokemons, PokemonApiResponse } from '../../api/pokemons';
 import Pagination from '../../components/pagination';
+import Loading from '../../components/loading';
 
 interface DashboardProps {
   user: boolean | null;
@@ -50,7 +51,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
   return (
     <>
       <Header />
-      <Cards records={pokemons} />
+      {pokemons.length ? <Cards records={pokemons} /> : <Loading /> }
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
