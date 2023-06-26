@@ -50,7 +50,7 @@ const Header: React.FC<HeaderProps> = ({ setUser }) => {
 
   return (
     <header className="bg-green" ref={headerRef}>
-<nav className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8" aria-label="Global">
+      <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex items-center lg:flex-1">
           <p className="-m-1.5 p-1.5">
             <img className="h-8 w-auto" src={logo} alt="" />
@@ -89,12 +89,16 @@ const Header: React.FC<HeaderProps> = ({ setUser }) => {
                     onClick={() => setAvatarMenuOpen(false)}
                   >
                     <div className="py-1">
-                      <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                      <Link
+                        to="/profile"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                      >
                         VIEW PROFILE
                       </Link>
-                    </div>
-                    <div className="py-1">
-                      <button onClick={handleLogout} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                      <button
+                        onClick={handleLogout}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
+                      >
                         LOG OUT
                       </button>
                     </div>
@@ -113,7 +117,11 @@ const Header: React.FC<HeaderProps> = ({ setUser }) => {
               <span className="sr-only">Your Company</span>
               <img className="h-8 w-auto" src={logo} alt="" />
             </p>
-            <button type="button" className="-m-2.5 rounded-md p-2.5 text-gray-700" onClick={() => setMobileMenuOpen(false)}>
+            <button
+              type="button"
+              className="-m-2.5 rounded-md p-2.5 text-gray-700"
+              onClick={() => setMobileMenuOpen(false)}
+            >
               <span className="sr-only">Close menu</span>
               <XMarkIcon className="h-6 w-6" aria-hidden="true" />
             </button>
@@ -121,17 +129,26 @@ const Header: React.FC<HeaderProps> = ({ setUser }) => {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <Link to="/" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                <Link
+                  to="/"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
                   DASHBOARD
                 </Link>
               </div>
               <div className="space-y-2 py-6">
-                <Link to="/profile" className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                <Link
+                  to="/profile"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
                   VIEW PROFILE
                 </Link>
               </div>
               <div className="py-6">
-                <button onClick={handleLogout} className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                <button
+                  onClick={handleLogout}
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                >
                   LOG OUT
                 </button>
               </div>

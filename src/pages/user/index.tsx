@@ -40,7 +40,6 @@ const PropertyValue = styled.p`
 `;
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
-    console.log(user)
   return (
     <CardContainer>
       <Title>Profile Page</Title>
