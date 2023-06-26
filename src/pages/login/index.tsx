@@ -59,7 +59,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
         Swal.fire({
           position: 'top-end',
           icon: 'error',
-          title: 'Password invalid',
+          title: 'Invalid password',
           showConfirmButton: false,
           timer: 1500,
         });
