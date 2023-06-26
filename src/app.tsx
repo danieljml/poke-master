@@ -12,23 +12,48 @@ interface User {
   password: string;
 }
 
+const PrivateRoute: React.FC<{ user: User | null; path: string; component: React.ComponentType }> = ({
+  user,
+  path,
+  component: Component,
+}) => {
+  if (path === '/login' && user) {
+    return <Navigate to="/" replace />;
+  }
+
+  if (!user && path !== '/login') {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <Component />;
+};
+
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(JSON.parse(localStorage.getItem('user') || 'null'));
+
+  const renderDashboard = (): JSX.Element => {
+    return user ? <Dashboard /> : <Navigate to="/login" />;
+  };
+
+  const renderLogin = (): JSX.Element => {
+    return user ? <Navigate to="/" /> : <Login setUser={setUser} />;
+  };
+
+  const renderDetails = (): JSX.Element => {
+    return user ? <Details /> : <Navigate to="/login" />;
+  };
 
   return (
     <Router>
       {user && <Header setUser={setUser} />}
       <Routes>
-        <Route path="/" element={user ? <Dashboard /> : <Navigate to="/login" />} />
-        <Route path="/login" element={user ? <Navigate to="/" /> : <Login setUser={setUser} />} />
-        <Route
-          path="/details/:name"
-          element={user ? <Details /> : <Navigate to="/login" />}
-        />
+        <Route path="/" element={<PrivateRoute user={user} path="/" component={renderDashboard} />} />
+        <Route path="/login" element={<PrivateRoute user={user} path="/login" component={renderLogin} />} />
+        <Route path="/details/:name" element={<PrivateRoute user={user} path="/details/:name" component={renderDetails} />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </Router>
   );
 };
 
-export default App
+export default App;
