@@ -126,15 +126,14 @@ const Details: React.FC = () => {
     description: item?.effect_entries?.find((entry: any) => entry?.language?.name === 'en')?.effect,
   }));
   const evolutionChain = details?.evolutionChain;
-  const formDescription = details?.species?.form_descriptions?.find((item: any) => item?.language?.name === 'en')?.description;
   const genus = details?.species?.genera?.find((item: any) => item?.language?.name === 'en')?.genus;
   const generation = details?.species?.generation?.name
     ?.split('-')
     ?.filter((item: string) => item !== 'generation')
     ?.join(' ')
     ?.toUpperCase();
-  const weight = details?.general?.weight;
-  const height = details?.general?.height;
+  const weight = details?.general?.weight / 10;
+  const height = details?.general?.height / 10;
   const weaknesses =
     details?.weaknesses.length > 1
       ? `${details?.weaknesses.slice(0, -1).join(', ')} and ${details?.weaknesses[details?.weaknesses.length - 1]}`
@@ -153,11 +152,11 @@ const Details: React.FC = () => {
           </Section>
           <Section>
             <SectionTitle>Weight</SectionTitle>
-            <SectionContent>{weight / 10} kg</SectionContent>
+            <SectionContent>{weight} kg</SectionContent>
           </Section>
           <Section>
             <SectionTitle>Height</SectionTitle>
-            <SectionContent>{height / 10} m</SectionContent>
+            <SectionContent>{height} m</SectionContent>
           </Section>
           <Section>
             <SectionTitle>Egg Groups</SectionTitle>
@@ -211,10 +210,6 @@ const Details: React.FC = () => {
                 ))}
               </ul>
             </SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Form Description</SectionTitle>
-            <SectionContent>{formDescription}</SectionContent>
           </Section>
           <Section>
             <SectionTitle>Genus</SectionTitle>
