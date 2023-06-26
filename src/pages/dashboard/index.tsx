@@ -1,14 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import Cards from '../../components/card';
-import Header from '../../components/header';
 import { getPokemons, PokemonApiResponse } from '../../api/pokemons';
 import Pagination from '../../components/pagination';
 import Loading from '../../components/loading';
-
-interface DashboardProps {
-  user: boolean | null;
-}
 
 interface PokemonDetails {
   name: string;
@@ -17,7 +11,7 @@ interface PokemonDetails {
   skills: string[];
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ user }) => {
+const Dashboard = () => {
   const [pokemons, setPokemons] = useState<PokemonDetails[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -44,13 +38,8 @@ const Dashboard: React.FC<DashboardProps> = ({ user }) => {
     setCurrentPage(page);
   };
 
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
-
   return (
     <>
-      <Header />
       {pokemons.length ? <Cards records={pokemons} /> : <Loading /> }
       <Pagination
         currentPage={currentPage}

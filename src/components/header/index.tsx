@@ -1,14 +1,21 @@
-import { useState, useEffect } from 'react'
-import { Dialog, Popover } from '@headlessui/react'
-import { useNavigate } from 'react-router-dom';
-import {
-  Bars3Icon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline'
-import logo from "../../assets/monoma-logo-white.png"
+import React, { useState, useEffect } from 'react';
+import { Dialog, Popover } from '@headlessui/react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import logo from "../../assets/monoma-logo-white.png";
 
-const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+interface User {
+  id: number;
+  email: string;
+  password: string;
+}
+
+interface HeaderProps {
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
+}
+
+const Header: React.FC<HeaderProps> = ({ setUser }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,12 +26,12 @@ const Header = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('user')
-    navigate('/login')
-  }
+    setUser(null);
+    localStorage.removeItem('user');
+    navigate('/login');
+  };
 
-  const handleNavigationDashboard = () => navigate('/')
-  
+  const handleNavigationDashboard = () => navigate('/');
 
   return (
     <header className="bg-green">
@@ -46,9 +53,9 @@ const Header = () => {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <button onClick={handleNavigationDashboard} className="text-sm font-semibold leading-6 text-gray-900">
+          <Link to="/" onClick={handleNavigationDashboard} className="text-sm font-semibold leading-6 text-gray-900">
             DASHBOARD
-          </button>
+          </Link>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <button onClick={handleLogout} className="text-sm font-semibold leading-6 text-gray-900">
@@ -80,11 +87,11 @@ const Header = () => {
           <div className="mt-6 flow-root">
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
-                <button onClick={handleNavigationDashboard} 
+                <Link to="/" onClick={handleNavigationDashboard} 
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 >
                   DASHBOARD
-                </button>
+                </Link>
               </div>
               <div className="py-6">
                 <button
@@ -99,7 +106,7 @@ const Header = () => {
         </Dialog.Panel>
       </Dialog>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

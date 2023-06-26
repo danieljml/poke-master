@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../../components/header';
 import { getPokemonDetails } from '../../api/pokemon-details';
 import styled from 'styled-components';
 import Loading from '../../components/loading';
@@ -141,7 +140,6 @@ const Details: React.FC = () => {
 
   return (
     <>
-      <Header />
       {details ? (
         <Container>
           <Title>{name}</Title>
