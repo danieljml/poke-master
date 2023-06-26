@@ -29,8 +29,7 @@ interface ParsedPokemon {
 const EvolutionChainCard = styled.div`
   background-color: #f5f5f5;
   border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
+  padding: 20px 20px 5px 20px;
 `;
 
 const EvolutionChainTitle = styled.h3`
@@ -49,7 +48,7 @@ const EvolutionChain: React.FC<EvolutionChainProps> = ({ evolutionChain }) => {
       const parsedPokemon: ParsedPokemon = {
         name: pokemon.species.name,
         evolvesTo: [],
-        condition: null
+        condition: null,
       };
 
       if (pokemon.evolution_details.length > 0) {
@@ -99,7 +98,7 @@ const Details: React.FC = () => {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = name ? await getPokemonDetails(name): null;
+        const response = name ? await getPokemonDetails(name) : null;
 
         if (response) {
           setDetails(response);
@@ -112,12 +111,10 @@ const Details: React.FC = () => {
     fetchDetails();
   }, [name]);
 
-  const description = details?.species?.flavor_text_entries?.find(
-    (item: any) => item?.language?.name === 'en'
-  )?.flavor_text;
+  const description = details?.species?.flavor_text_entries?.find((item: any) => item?.language?.name === 'en')?.flavor_text;
   const pokedexNumbers = details?.species?.pokedex_numbers?.map((item: any) => ({
     entryNumber: item?.entry_number,
-    name: item?.pokedex?.name?.split('-')?.join(' ')
+    name: item?.pokedex?.name?.split('-')?.join(' '),
   }));
   const eggGroups = details?.species?.egg_groups?.map((item: any) => item?.name);
   const color = details?.species?.color?.name;
@@ -125,19 +122,23 @@ const Details: React.FC = () => {
   const baseHappiness = details?.species?.base_happiness;
   const abilities = details?.abilities?.map((item: any) => ({
     name: item?.name?.split('-')?.join(' '),
-    summary: item?.flavor_text_entries?.find((entry: any) => entry?.language?.name === 'en')
-      ?.flavor_text,
-    description: item?.effect_entries?.find((entry: any) => entry?.language?.name === 'en')
-      ?.effect
+    summary: item?.flavor_text_entries?.find((entry: any) => entry?.language?.name === 'en')?.flavor_text,
+    description: item?.effect_entries?.find((entry: any) => entry?.language?.name === 'en')?.effect,
   }));
   const evolutionChain = details?.evolutionChain;
-  const formDescription = details?.species?.form_descriptions?.find(
-    (item: any) => item?.language?.name === 'en'
-  )?.description;
+  const formDescription = details?.species?.form_descriptions?.find((item: any) => item?.language?.name === 'en')?.description;
   const genus = details?.species?.genera?.find((item: any) => item?.language?.name === 'en')?.genus;
-  const generation = details?.species?.generation?.name?.split('-')?.filter(
-    (item: string) => item !== 'generation'
-  )?.join(' ')?.toUpperCase();
+  const generation = details?.species?.generation?.name
+    ?.split('-')
+    ?.filter((item: string) => item !== 'generation')
+    ?.join(' ')
+    ?.toUpperCase();
+  const weight = details?.general?.weight;
+  const height = details?.general?.height;
+  const weaknesses =
+    details?.weaknesses.length > 1
+      ? `${details?.weaknesses.slice(0, -1).join(', ')} and ${details?.weaknesses[details?.weaknesses.length - 1]}`
+      : details?.weaknesses[0];
 
   return (
     <>
@@ -151,24 +152,19 @@ const Details: React.FC = () => {
             <SectionContent>{description}</SectionContent>
           </Section>
           <Section>
-            <SectionTitle>Pokedex Numbers</SectionTitle>
-            <SectionContent>
-              <ul>
-                {pokedexNumbers?.map((item: PokedexNumber) => (
-                  <li key={item.name}>
-                    <span>{item.entryNumber}</span>
-                    <span>{item.name}</span>
-                  </li>
-                ))}
-              </ul>
-            </SectionContent>
+            <SectionTitle>Weight</SectionTitle>
+            <SectionContent>{weight / 10} kg</SectionContent>
+          </Section>
+          <Section>
+            <SectionTitle>Height</SectionTitle>
+            <SectionContent>{height / 10} m</SectionContent>
           </Section>
           <Section>
             <SectionTitle>Egg Groups</SectionTitle>
             <SectionContent>
               <ul>
                 {eggGroups?.map((item: string) => (
-                  <li key={item}>{item}</li>
+                  <ListItem key={item}>{item}</ListItem>
                 ))}
               </ul>
             </SectionContent>
@@ -180,15 +176,38 @@ const Details: React.FC = () => {
           <Section>
             <SectionTitle>Abilities</SectionTitle>
             <SectionContent>
-              <ul>
+              <AbilitiesContainer>
                 {abilities?.map((item: Ability) => (
-                  <li key={item.name}>
-                    <ul>
-                      <li>Name: {item?.name}</li>
-                      <li>Summary: {item?.summary}</li>
-                      <li>Description: {item?.description}</li>
-                    </ul>
-                  </li>
+                  <AbilityCard key={item.name}>
+                    <AbilityName>{item.name}</AbilityName>
+                    <AbilitySummary>{item.summary}</AbilitySummary>
+                    <AbilityDescription>{item.description}</AbilityDescription>
+                  </AbilityCard>
+                ))}
+              </AbilitiesContainer>
+            </SectionContent>
+          </Section>
+          <Section>
+            <SectionTitle>Weaknesses</SectionTitle>
+            <SectionContent>
+              <ul>{weaknesses}</ul>
+            </SectionContent>
+          </Section>
+          <Section>
+            <SectionTitle>Evolution Chain</SectionTitle>
+            <SectionContent>
+              <EvolutionChain evolutionChain={evolutionChain} />
+            </SectionContent>
+          </Section>
+          <Section>
+            <SectionTitle>Pokedex Numbers</SectionTitle>
+            <SectionContent>
+              <ul>
+                {pokedexNumbers?.map((item: PokedexNumber) => (
+                  <ListItem key={item.name}>
+                    <span>{item.entryNumber} - </span>
+                    <span>{item.name}</span>
+                  </ListItem>
                 ))}
               </ul>
             </SectionContent>
@@ -196,12 +215,6 @@ const Details: React.FC = () => {
           <Section>
             <SectionTitle>Form Description</SectionTitle>
             <SectionContent>{formDescription}</SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Evolution Chain</SectionTitle>
-            <SectionContent>
-              <EvolutionChain evolutionChain={evolutionChain} />
-            </SectionContent>
           </Section>
           <Section>
             <SectionTitle>Genus</SectionTitle>
@@ -238,9 +251,17 @@ const SectionTitle = styled.h2`
 `;
 
 const SectionContent = styled.div`
+  text-transform: capitalize;
   background-color: #f5f5f5;
   border-radius: 8px;
   padding: 20px;
+`;
+
+const ListItem = styled.div`
+  text-transform: capitalize;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 20px 0;
 `;
 
 const Title = styled.h1`
@@ -261,6 +282,35 @@ const PokemonImage = styled.img`
   margin: 0 auto;
   max-width: 300px;
   max-height: 300px;
+`;
+
+const AbilitiesContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+`;
+
+const AbilityCard = styled.div`
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 0 20px 20px 0;
+`;
+
+const AbilityName = styled.h3`
+  text-transform: capitalize;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #205d3e;
+`;
+
+const AbilitySummary = styled.p`
+  margin-top: 10px;
+  font-weight: bold;
+`;
+
+const AbilityDescription = styled.p`
+  margin-top: 10px;
 `;
 
 export default Details;
