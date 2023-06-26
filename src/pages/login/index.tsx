@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
 import logo from '../../assets/monoma-logo.png';
-import { findUser } from '../../utils';
-import Swal from 'sweetalert2'
+import { getUserByEmail, getUserByPassword, findUser } from '../../utils';
+import Swal from 'sweetalert2';
 
 interface User {
   id: number;
@@ -19,7 +19,6 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
-
   useEffect(() => {
     const body = document.querySelector('body');
     if (body) {
@@ -31,43 +30,55 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const [email, password] = [
-      formData.get('email') as string,
-      formData.get('password') as string,
-    ];
-    const userExist = findUser(email, password);
-    if (userExist) {
-      const {id, email} = userExist
-      setUser(userExist);
-      localStorage.setItem('user', JSON.stringify({id, email}));
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const userEmail = getUserByEmail(email);
+
+    if (userEmail) {
+      const userPassword = getUserByPassword(password);
+
+      if (userPassword) {
+        const user = findUser(email, password);
+        if (user) {
+          setUser(user);
+          localStorage.setItem('user', JSON.stringify({ ...user }));
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Login Successful',
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          navigate('/');
+        }
+      } else {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: 'Password invalid',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } else {
       Swal.fire({
         position: 'top-end',
-        icon: 'success',
-        title: 'Login Successful',
+        icon: 'error',
+        title: 'User does not exist',
         showConfirmButton: false,
-        timer: 1500
-      })
-      return navigate('/');
+        timer: 1500,
+      });
     }
-    Swal.fire({
-      position: 'top-end',
-      icon: 'error',
-      title: 'This user has an error',
-      showConfirmButton: false,
-      timer: 1500
-    })
   };
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img className="mx-auto h-10 w-auto" src={logo} alt="Your Company" />
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign in to your account
-        </h2>
+        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -101,16 +112,8 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
                 required
                 className="block w-full rounded-md border-gray-300 shadow-sm px-4 py-2 pr-10 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
               />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer"
-                onClick={togglePasswordVisibility}
-              >
-                {showPassword ? (
-                  <EyeSlashIcon className="h-5 w-5 text-gray-400" />
-                ) : (
-                  <EyeIcon className="h-5 w-5 text-gray-400" />
-                )}
+              <button type="button" className="absolute inset-y-0 right-0 flex items-center pr-2 cursor-pointer" onClick={togglePasswordVisibility}>
+                {showPassword ? <EyeSlashIcon className="h-5 w-5 text-gray-400" /> : <EyeIcon className="h-5 w-5 text-gray-400" />}
               </button>
             </div>
           </div>
