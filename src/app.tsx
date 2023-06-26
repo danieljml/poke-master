@@ -5,6 +5,7 @@ import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import Details from './pages/details';
 import Header from './components/header';
+import Profile from './pages/user';
 
 interface User {
   id: number;
@@ -30,7 +31,11 @@ const PrivateRoute: React.FC<{ user: User | null; path: string; component: React
 
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(JSON.parse(localStorage.getItem('user') || 'null'));
-
+  
+  const renderProfile = (): JSX.Element => {
+    return user ? <Profile user={user}/> : <Navigate to="/profile" />;
+  };
+  
   const renderDashboard = (): JSX.Element => {
     return user ? <Dashboard /> : <Navigate to="/login" />;
   };
@@ -48,6 +53,7 @@ const App: React.FC = () => {
       {user && <Header setUser={setUser} />}
       <Routes>
         <Route path="/" element={<PrivateRoute user={user} path="/" component={renderDashboard} />} />
+        <Route path="/profile" element={<PrivateRoute user={user} path="/profile" component={renderProfile} />} />
         <Route path="/login" element={<PrivateRoute user={user} path="/login" component={renderLogin} />} />
         <Route path="/details/:name" element={<PrivateRoute user={user} path="/details/:name" component={renderDetails} />} />
         <Route path="*" element={<Navigate to="/" />} />

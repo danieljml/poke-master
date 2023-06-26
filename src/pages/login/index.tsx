@@ -44,8 +44,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
         const user = findUser(email, password);
         if (user) {
           setUser(user);
-          const { id, email } = user;
-          localStorage.setItem('user', JSON.stringify({ id, email }));
+          localStorage.setItem('user', JSON.stringify(user));
           Swal.fire({
             position: 'top-end',
             icon: 'success',
