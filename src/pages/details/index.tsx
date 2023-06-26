@@ -93,17 +93,18 @@ const EvolutionChain: React.FC<EvolutionChainProps> = ({ evolutionChain }) => {
 const Details: React.FC = () => {
   const { name } = useParams<{ name: string }>();
   const [details, setDetails] = useState<any | null>(null);
+  const [errorMsj, setErrorMsj] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchDetails = async () => {
       try {
         const response = name ? await getPokemonDetails(name) : null;
-
         if (response) {
           setDetails(response);
         }
       } catch (error) {
         console.log('Error fetching Pokemons: ', error);
+        setErrorMsj(true);
       }
     };
 
@@ -140,94 +141,98 @@ const Details: React.FC = () => {
 
   return (
     <>
-      {details ? (
-        <Container>
-          <Title>{name}</Title>
-          <PokemonImage src={details?.general?.sprites?.front_default} alt={name} />
-          <Section>
-            <SectionTitle>Description</SectionTitle>
-            <SectionContent>{description}</SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Weight</SectionTitle>
-            <SectionContent>{weight} kg</SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Height</SectionTitle>
-            <SectionContent>{height} m</SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Egg Groups</SectionTitle>
-            <SectionContent>
-              <ul>
-                {eggGroups?.map((item: string) => (
-                  <ListItem key={item}>{item}</ListItem>
-                ))}
-              </ul>
-            </SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Color</SectionTitle>
-            <SectionContent>{color}</SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Abilities</SectionTitle>
-            <SectionContent>
-              <AbilitiesContainer>
-                {abilities?.map((item: Ability) => (
-                  <AbilityCard key={item.name}>
-                    <AbilityName>{item.name}</AbilityName>
-                    <AbilitySummary>{item.summary}</AbilitySummary>
-                    <AbilityDescription>{item.description}</AbilityDescription>
-                  </AbilityCard>
-                ))}
-              </AbilitiesContainer>
-            </SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Weaknesses</SectionTitle>
-            <SectionContent>
-              <ul>{weaknesses}</ul>
-            </SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Evolution Chain</SectionTitle>
-            <SectionContent>
-              <EvolutionChain evolutionChain={evolutionChain} />
-            </SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Pokedex Numbers</SectionTitle>
-            <SectionContent>
-              <ul>
-                {pokedexNumbers?.map((item: PokedexNumber) => (
-                  <ListItem key={item.name}>
-                    <span>{item.entryNumber} - </span>
-                    <span>{item.name}</span>
-                  </ListItem>
-                ))}
-              </ul>
-            </SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Genus</SectionTitle>
-            <SectionContent>{genus}</SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Generation</SectionTitle>
-            <SectionContent>{generation}</SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Capture Rate</SectionTitle>
-            <SectionContent>{captureRate}</SectionContent>
-          </Section>
-          <Section>
-            <SectionTitle>Base Happiness</SectionTitle>
-            <SectionContent>{baseHappiness}</SectionContent>
-          </Section>
-        </Container>
+      {!errorMsj ? (
+        details ? (
+          <Container>
+            <Title>{name}</Title>
+            <PokemonImage src={details?.general?.sprites?.front_default} alt={name} />
+            <Section>
+              <SectionTitle>Description</SectionTitle>
+              <SectionContent>{description}</SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Weight</SectionTitle>
+              <SectionContent>{weight} kg</SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Height</SectionTitle>
+              <SectionContent>{height} m</SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Egg Groups</SectionTitle>
+              <SectionContent>
+                <ul>
+                  {eggGroups?.map((item: string) => (
+                    <ListItem key={item}>{item}</ListItem>
+                  ))}
+                </ul>
+              </SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Color</SectionTitle>
+              <SectionContent>{color}</SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Abilities</SectionTitle>
+              <SectionContent>
+                <AbilitiesContainer>
+                  {abilities?.map((item: Ability) => (
+                    <AbilityCard key={item.name}>
+                      <AbilityName>{item.name}</AbilityName>
+                      <AbilitySummary>{item.summary}</AbilitySummary>
+                      <AbilityDescription>{item.description}</AbilityDescription>
+                    </AbilityCard>
+                  ))}
+                </AbilitiesContainer>
+              </SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Weaknesses</SectionTitle>
+              <SectionContent>
+                <ul>{weaknesses}</ul>
+              </SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Evolution Chain</SectionTitle>
+              <SectionContent>
+                <EvolutionChain evolutionChain={evolutionChain} />
+              </SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Pokedex Numbers</SectionTitle>
+              <SectionContent>
+                <ul>
+                  {pokedexNumbers?.map((item: PokedexNumber) => (
+                    <ListItem key={item.name}>
+                      <span>{item.entryNumber} - </span>
+                      <span>{item.name}</span>
+                    </ListItem>
+                  ))}
+                </ul>
+              </SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Genus</SectionTitle>
+              <SectionContent>{genus}</SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Generation</SectionTitle>
+              <SectionContent>{generation}</SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Capture Rate</SectionTitle>
+              <SectionContent>{captureRate}</SectionContent>
+            </Section>
+            <Section>
+              <SectionTitle>Base Happiness</SectionTitle>
+              <SectionContent>{baseHappiness}</SectionContent>
+            </Section>
+          </Container>
+        ) : (
+          <Loading />
+        )
       ) : (
-        <Loading />
+        <Title>Pokemon not found</Title>
       )}
     </>
   );
