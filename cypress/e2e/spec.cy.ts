@@ -12,6 +12,7 @@ describe('Application test', () => {
 		cy.get('input[name="email"]').type('tbollam0@samsung.com');
     cy.get('input[name="password"]').type('yH8@wIb+F<_');
     cy.get('button[type="submit"]').click();
+		cy.wait(5000);
 		cy.get('[data-testid="pokemon-card-bulbasaur"]').click();
     cy.url().should('include', '/details/bulbasaur');
   })
