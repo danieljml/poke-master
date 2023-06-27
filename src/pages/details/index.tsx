@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getPokemonDetails } from '../../api/pokemon-details';
@@ -143,7 +144,7 @@ const Details: React.FC = () => {
     <>
       {!errorMsj ? (
         details ? (
-          <Container data-testid={name.toLowerCase()}>
+          <Container data-testid={name?.toLowerCase()}>
             <Title>{name}</Title>
             <PokemonImage src={details?.general?.sprites?.front_default} alt={name} />
             <Section>
