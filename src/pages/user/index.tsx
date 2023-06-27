@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import jwt_decode from 'jwt-decode';
 
 interface User {
   id: number;
@@ -40,6 +41,7 @@ const PropertyValue = styled.p`
 `;
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
+	const decodedToken = jwt_decode(user['token']);
   return (
     <CardContainer>
       <Title>Profile Page</Title>
@@ -48,7 +50,8 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
       <PropertyLabel>Email:</PropertyLabel>
       <PropertyValue>{user.email}</PropertyValue>
       <PropertyLabel>Password:</PropertyLabel>
-      <PropertyValue>{user.password}</PropertyValue>
+      <PropertyValue>{decodedToken.password}</PropertyValue>
+	
     </CardContainer>
   );
 };

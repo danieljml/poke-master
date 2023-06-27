@@ -2,26 +2,31 @@
   {
     "id": 1,
     "email": "tbollam0@samsung.com",
-    "password": "yH8@wIb+F<_"
+    "password": "yH8@wIb+F<_",
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0Ym9sbGFtMEBzYW1zdW5nLmNvbSIsInBhc3N3b3JkIjoieUg4QHdJYitGPF8ifQ.JXi-_m-H5485vP9eg1NCEXfJnDBy3l-bk5GWw9cwgNE"
   },
   {
     "id": 2,
     "email": "medgin1@booking.com",
-    "password": "dE8+xXVqnA%4.bt"
+    "password": "dE8+xXVqnA%4.bt",
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJtZWRnaW4xQGJvb2tpbmcuY29tIiwicGFzc3dvcmQiOiJkRTgreFhWcW5BJTQuYnQifQ.CY87NjEogyrbAe5Kr8NC8UU1-ghabYH3Fxs1S0G1kyQ"
   },
   {
     "id": 3,
     "email": "eloncaster2@comsenz.com",
-    "password": "cF6@yYcM"
+    "password": "cF6@yYcM",
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJlbG9uY2FzdGVyMkBjb21zZW56LmNvbSIsInBhc3N3b3JkIjoiY0Y2QHlZY00ifQ.TH2utab3C22CBjx1BPuMVHLtb5oJF0bZ0c6jkRsC02Q"
   },
   {
     "id": 4,
     "email": "dbealing3@arizona.edu",
-    "password": "zJ3&t.&Zp"
+    "password": "zJ3&t.&Zp",
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJkYmVhbGluZzNAYXJpem9uYS5lZHUiLCJwYXNzd29yZCI6InpKMyZ0LiZacCJ9.3o6HlxQUi7a_kdzmiWTun_YfltAL33XzvbC6AYTBV7I"
   },
   {
     "id": 5,
     "email": "fkitchaside4@ameblo.jp",
-    "password": "test123"
+    "password": "test123",
+	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJma2l0Y2hhc2lkZTRAYW1lYmxvLmpwIiwicGFzc3dvcmQiOiJ0ZXN0MTIzIn0.zaJRfpi8lT4HExbJ7szeppn11AzpSCgsg_jzcG0Njlw"
   }
 ]

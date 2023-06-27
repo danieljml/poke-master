@@ -9,6 +9,7 @@ interface User {
   id: number;
   email: string;
   password: string;
+	token: string
 }
 
 interface LoginProps {
@@ -44,7 +45,7 @@ const Login: React.FC<LoginProps> = ({ setUser }) => {
         const user = findUser(email, password);
         if (user) {
           setUser(user);
-          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('user', JSON.stringify({id: user.id, email: user.email, token: user.token}));
           Swal.fire({
             position: 'top-end',
             icon: 'success',
