@@ -143,7 +143,7 @@ const Details: React.FC = () => {
     <>
       {!errorMsj ? (
         details ? (
-          <Container>
+          <Container data-testid={name.toLowerCase()}>
             <Title>{name}</Title>
             <PokemonImage src={details?.general?.sprites?.front_default} alt={name} />
             <Section>

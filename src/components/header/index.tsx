@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ setUser }) => {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12">
           <Link to="/" className="text-sm font-semibold leading-6 text-gray-900">
-            DASHBOARD
+            <p data-testid='header-title'>DASHBOARD</p>
           </Link>
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -80,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ setUser }) => {
                   className={`${open ? 'text-green-600' : 'text-gray-900'} flex items-center focus:outline-none`}
                   onClick={() => setAvatarMenuOpen(!avatarMenuOpen)}
                 >
-                  <img className="h-8 w-8 rounded-full" src={defaultAvatar} alt="Avatar" />
+                  <img data-testid="avatar-button" className="h-8 w-8 rounded-full" src={defaultAvatar} alt="Avatar" />
                 </Popover.Button>
                 {avatarMenuOpen && (
                   <Popover.Panel
@@ -93,9 +93,10 @@ const Header: React.FC<HeaderProps> = ({ setUser }) => {
                         to="/profile"
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                       >
-                        VIEW PROFILE
+												<p data-testid="view-profile-text">VIEW PROFILE</p>
                       </Link>
                       <button
+												data-testid="logout-button"
                         onClick={handleLogout}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                       >

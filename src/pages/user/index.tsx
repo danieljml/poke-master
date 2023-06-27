@@ -44,14 +44,13 @@ const Profile: React.FC<ProfileProps> = ({ user }) => {
 	const decodedToken = jwt_decode(user['token']);
   return (
     <CardContainer>
-      <Title>Profile Page</Title>
+      <Title data-testid="profile-title">Profile Page</Title>
       <PropertyLabel>ID:</PropertyLabel>
       <PropertyValue>{user.id}</PropertyValue>
       <PropertyLabel>Email:</PropertyLabel>
-      <PropertyValue>{user.email}</PropertyValue>
+      <PropertyValue data-testid="user-email">{user.email}</PropertyValue>
       <PropertyLabel>Password:</PropertyLabel>
-      <PropertyValue>{decodedToken.password}</PropertyValue>
-	
+      <PropertyValue data-testid="user-password">{decodedToken.password}</PropertyValue>
     </CardContainer>
   );
 };

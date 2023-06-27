@@ -80,7 +80,7 @@ const CardsContainer = styled.div`
 const Card: React.FC<CardProps> = ({ date, weight, title, skills, headerImageUrl }) => {
 
   return (
-    <Link to={`details/${title}`}>
+    <Link data-testid={`pokemon-card-${title.toLowerCase()}`} to={`details/${title}`}>
       <CardContainer>
         <CardHeader headerImageUrl={headerImageUrl}>
           <span>{date}</span>
