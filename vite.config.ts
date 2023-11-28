@@ -7,6 +7,7 @@ import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfil
 export default ({ mode }) => {
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 	return defineConfig({
+		base: 'https://danieljml.github.io/poke-master/',
 		resolve: {
 			alias: {
 				util: 'rollup-plugin-node-polyfills/polyfills/util'	
