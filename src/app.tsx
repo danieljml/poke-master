@@ -45,19 +45,19 @@ const getAndValidateUser = () => {
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(getAndValidateUser());
   
-  const renderProfile = (): JSX.Element => {
+  const renderProfile = () => {
     return user ? <Profile user={user}/> : <Navigate to="/profile" />;
   };
   
-  const renderDashboard = (): JSX.Element => {
+  const renderDashboard = () => {
     return user ? <Dashboard /> : <Navigate to="/login" />;
   };
 
-  const renderLogin = (): JSX.Element => {
+  const renderLogin = () => {
     return user ? <Navigate to="/" /> : <Login setUser={setUser} />;
   };
 
-  const renderDetails = (): JSX.Element => {
+  const renderDetails = () => {
     return user ? <Details /> : <Navigate to="/login" />;
   };
 

@@ -6,7 +6,7 @@ interface User {
   id: number;
   email: string;
   password: string;
-  token: string;
+  token?: string;
 }
 
 interface ProfileProps {
@@ -49,7 +49,8 @@ const PropertyValue = styled.p`
 `;
 
 const Profile: React.FC<ProfileProps> = ({ user }) => {
-const decodedToken = jwt_decode<DecodedToken>(user['token']);
+  const decodedToken = jwt_decode<DecodedToken | undefined>(user?.token || '');
+
   return (
     <CardContainer>
       <Title data-testid="profile-title">Profile Page</Title>
@@ -58,7 +59,7 @@ const decodedToken = jwt_decode<DecodedToken>(user['token']);
       <PropertyLabel>Email:</PropertyLabel>
       <PropertyValue data-testid="user-email">{user.email}</PropertyValue>
       <PropertyLabel>Password:</PropertyLabel>
-      <PropertyValue data-testid="user-password">{decodedToken?.password}</PropertyValue>
+      <PropertyValue data-testid="user-password">{decodedToken?.password || 'Not available'}</PropertyValue>
     </CardContainer>
   );
 };
